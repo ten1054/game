@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://diyicbagklhyb"]
+
+[ext_resource type="Script" path="res://scn/menu/startMenu.gd" id="1_litrb"]
+[ext_resource type="Script" path="res://scn/menu/background.gd" id="2_dgmkr"]
+[ext_resource type="Texture2D" uid="uid://b1be1h1ld0j67" path="res://assets/img/background/background.jpg" id="2_dkjya"]
+[ext_resource type="Texture2D" uid="uid://bd1q4etwyc0ni" path="res://assets/img/background/wave-paint.png" id="4_qla43"]
+[ext_resource type="AudioStream" uid="uid://jjvaqqxj2ylx" path="res://assets/audio (1).mp3" id="5_4l0nq"]
+
+[node name="StartMenu" type="Node2D"]
+script = ExtResource("1_litrb")
+
+[node name="play" type="Button" parent="."]
+offset_left = 563.0
+offset_top = 266.0
+offset_right = 662.0
+offset_bottom = 318.0
+theme_override_font_sizes/font_size = 30
+text = "Play"
+
+[node name="quit" type="Button" parent="."]
+offset_left = 563.0
+offset_top = 341.0
+offset_right = 662.0
+offset_bottom = 393.0
+theme_override_font_sizes/font_size = 30
+text = "Quit
+"
+
+[node name="Background" type="ParallaxBackground" parent="."]
+script = ExtResource("2_dgmkr")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.2, 1)
+motion_mirroring = Vector2(1270, 0)
+
+[node name="Background2" type="Sprite2D" parent="Background/ParallaxLayer"]
+scale = Vector2(0.615865, 0.658182)
+texture = ExtResource("2_dkjya")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="Background"]
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(1270, 0)
+
+[node name="Wave-paint" type="Sprite2D" parent="Background/ParallaxLayer2"]
+position = Vector2(641.125, 454.5)
+scale = Vector2(1.59219, 1.67187)
+texture = ExtResource("4_qla43")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="Background"]
+motion_mirroring = Vector2(1270, 0)
+
+[node name="Wave-paint" type="Sprite2D" parent="Background/ParallaxLayer3"]
+position = Vector2(643.5, 520)
+scale = Vector2(1.59625, 1.2375)
+texture = ExtResource("4_qla43")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_4l0nq")
+volume_db = -19.449
+autoplay = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1018.0
+offset_top = 37.0
+offset_right = 1105.0
+offset_bottom = 167.0
+text = "A -> 左
+D -> 右
+空格 -> 跳跃
+J -> 攻击
+K -> 翻滚"
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

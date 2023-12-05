@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dy7nymno7voj4"]
+
+[node name="Pause_menu" type="CanvasLayer"]
+
+[node name="Menu" type="Button" parent="."]
+offset_left = 560.0
+offset_top = 247.0
+offset_right = 667.0
+offset_bottom = 280.0
+text = "主页"
+
+[node name="Continue" type="Button" parent="."]
+offset_left = 560.0
+offset_top = 294.0
+offset_right = 667.0
+offset_bottom = 329.0
+text = "继续游戏
+"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 560.0
+offset_top = 424.0
+offset_right = 667.0
+offset_bottom = 458.0
+text = "退出游戏"
+
+[node name="Save" type="Button" parent="."]
+offset_left = 560.0
+offset_top = 339.0
+offset_right = 667.0
+offset_bottom = 373.0
+text = "保存"
+
+[node name="Load" type="Button" parent="."]
+offset_left = 560.0
+offset_top = 382.0
+offset_right = 667.0
+offset_bottom = 416.0
+text = "加载"

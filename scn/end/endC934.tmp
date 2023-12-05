@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc5at5r8c11hp"]
+
+[sub_resource type="GDScript" id="GDScript_weai3"]
+script/source = "extends Label
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if(Global.day < 2):
+		text = \"练习不到一年\"
+	elif Global.day < 5:
+		text = \"练习不到两年\"
+	elif Global.day < 7:
+		text = \"练习两年半\"
+	elif Global.day < 10:
+		text = \"出道\"
+	elif Global.day < 15:
+		text = \"geigei\"
+"
+
+[sub_resource type="GDScript" id="GDScript_y856p"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	text = \"你活下去了:\" + str(Global.day) + \"天\"
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	text = \"你活下去了:\" + str(Global.day) + \"天\"
+"
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1152, 40)
+offset_top = 197.0
+offset_right = 1152.0
+offset_bottom = 385.0
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "菜23123"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_weai3")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 473.0
+offset_top = 344.0
+offset_right = 678.0
+offset_bottom = 389.0
+theme_override_font_sizes/font_size = 30
+text = "你活下去了:0天"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_y856p")

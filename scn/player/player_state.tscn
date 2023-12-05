@@ -1,0 +1,240 @@
+[gd_scene load_steps=13 format=3 uid="uid://dwvs7us5wbwdb"]
+
+[ext_resource type="Texture2D" uid="uid://dnctfeem4jdsy" path="res://assets/GUI.png" id="1_gi1ur"]
+[ext_resource type="Texture2D" uid="uid://3eufko5n1rr7" path="res://assets/img/大鹅.png" id="2_yj52n"]
+[ext_resource type="Texture2D" uid="uid://dfpje8dltknml" path="res://assets/Rocky Roads/Objects/coin_gold.png" id="3_jmd8m"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6hgpd"]
+load_path = "res://.godot/imported/GUI.png-1d777cd13042b55a1e4b617853865016.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pixaq"]
+atlas = SubResource("CompressedTexture2D_6hgpd")
+region = Rect2(72, 22, 49, 3)
+
+[sub_resource type="GDScript" id="GDScript_xpv6o"]
+script/source = "extends TextureProgressBar
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	max_value = Global.player_max_health
+	value = Global.player_health 
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	value = Global.player_health
+"
+
+[sub_resource type="GDScript" id="GDScript_76lle"]
+script/source = "extends Label
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	text = \"HP:\" + str(floor(Global.player_health)) 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	text = \"HP:\" + str(floor(Global.player_health)) 
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaqre"]
+atlas = SubResource("CompressedTexture2D_6hgpd")
+region = Rect2(6, 22, 49, 3)
+
+[sub_resource type="GDScript" id="GDScript_homx3"]
+script/source = "extends TextureProgressBar
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	max_value = Global.player_max_energy
+	value = Global.player_energy 
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	value = Global.player_energy
+"
+
+[sub_resource type="GDScript" id="GDScript_vu7p4"]
+script/source = "extends Label
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	text = \"EY:\" + str(floor(Global.player_energy)) 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	
+	Global.player_energy
+	text = \"EY:\" + str(floor(Global.player_energy))
+"
+
+[sub_resource type="GDScript" id="GDScript_v35u5"]
+script/source = "extends Label
+
+#@onready var player = $\"../../Player/Player\"
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	text = \": \" + str(Global.gold) 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	text = \": \" + str(Global.gold) 
+"
+
+[sub_resource type="GDScript" id="GDScript_nu3t1"]
+script/source = "extends Label
+@onready var main =  $\"..\"
+
+func _ready():
+	day_change()
+
+
+func day_change():
+	Global.day += 1
+	text = \"Day: \" + str(Global.day)
+	self.pivot_offset = self.size / 2
+	var show_color_tween = get_tree().create_tween().bind_node(self)
+	show_color_tween.tween_property(self,\"modulate\",Color(1,1,1,1),0.5)
+	show_color_tween.parallel().tween_property(self,\"scale\",Vector2(2,2),0.4)
+	await show_color_tween.finished
+	show_color_tween.kill()
+	await  get_tree().create_timer(1).timeout
+	var disapper_color_tween = get_tree().create_tween().bind_node(self)
+	disapper_color_tween.tween_property(self,\"modulate\",Color(1,1,1,0),0.5)
+	await disapper_color_tween.finished
+	self.scale = Vector2(1,1)
+	disapper_color_tween.kill()
+
+
+
+func _on_day_timer_timeout():
+	day_change()
+"
+
+[node name="PlayerState" type="CanvasLayer"]
+
+[node name="Avatar" type="Node2D" parent="."]
+position = Vector2(49, 60)
+scale = Vector2(6, 6)
+
+[node name="Bg" type="Sprite2D" parent="Avatar"]
+position = Vector2(5.20589, 2.99533)
+scale = Vector2(0.508403, 0.5)
+texture = ExtResource("1_gi1ur")
+region_enabled = true
+region_rect = Rect2(3, 35, 42, 42)
+
+[node name="Avatar" type="Sprite2D" parent="Avatar"]
+position = Vector2(5.30814, 2.84112)
+scale = Vector2(0.712724, 0.732024)
+texture = ExtResource("2_yj52n")
+region_enabled = true
+region_rect = Rect2(4, 10, 25, 21)
+
+[node name="Blood" type="Node2D" parent="."]
+position = Vector2(-34, -30)
+scale = Vector2(2, 2)
+
+[node name="Bg" type="Sprite2D" parent="Blood"]
+position = Vector2(147, 38)
+scale = Vector2(2.09615, 2.32143)
+texture = ExtResource("1_gi1ur")
+region_enabled = true
+region_rect = Rect2(135, 20, 52, 7)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Blood"]
+offset_left = 95.0
+offset_top = 35.0
+offset_right = 144.0
+offset_bottom = 38.0
+scale = Vector2(2.07008, 2.37436)
+max_value = 1000.0
+value = 100.0
+texture_progress = SubResource("AtlasTexture_pixaq")
+script = SubResource("GDScript_xpv6o")
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="Blood"]
+offset_left = 96.0
+offset_top = 33.0
+offset_right = 116.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 7
+text = "HP: "
+script = SubResource("GDScript_76lle")
+metadata/_edit_use_anchors_ = true
+
+[node name="Energy" type="Node2D" parent="."]
+position = Vector2(-35, -33)
+
+[node name="Bg" type="Sprite2D" parent="Energy"]
+position = Vector2(276, 116)
+scale = Vector2(4, 4.35714)
+texture = ExtResource("1_gi1ur")
+region_enabled = true
+region_rect = Rect2(135, 4, 45, 7)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Energy"]
+offset_left = 190.0
+offset_top = 110.0
+offset_right = 239.0
+offset_bottom = 113.0
+scale = Vector2(3.38703, 4.31372)
+value = 100.0
+texture_progress = SubResource("AtlasTexture_oaqre")
+script = SubResource("GDScript_homx3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Label" parent="Energy"]
+offset_left = 193.0
+offset_top = 110.0
+offset_right = 213.0
+offset_bottom = 127.0
+theme_override_font_sizes/font_size = 10
+text = "EY:"
+script = SubResource("GDScript_vu7p4")
+metadata/_edit_use_anchors_ = true
+
+[node name="Gold" type="Node2D" parent="."]
+position = Vector2(-34, -29)
+
+[node name="Icon" type="Sprite2D" parent="Gold"]
+position = Vector2(198, 148)
+scale = Vector2(1.8125, 1.86607)
+texture = ExtResource("3_jmd8m")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Gold" type="Label" parent="Gold"]
+offset_left = 211.0
+offset_top = 136.0
+offset_right = 228.0
+offset_bottom = 161.0
+theme_override_font_sizes/font_size = 15
+text = ": 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_v35u5")
+metadata/_edit_use_anchors_ = true
+
+[node name="Day" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+light_mask = 0
+visibility_layer = 2
+offset_left = 746.0
+offset_top = 384.0
+offset_right = 866.0
+offset_bottom = 456.0
+pivot_offset = Vector2(59, 39)
+theme_override_font_sizes/font_size = 40
+text = "Day: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_nu3t1")
+
+[node name="DayTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[connection signal="timeout" from="DayTimer" to="Day" method="_on_day_timer_timeout"]

@@ -1,0 +1,103 @@
+[gd_scene load_steps=7 format=3 uid="uid://cc5at5r8c11hp"]
+
+[ext_resource type="Script" path="res://scn/end/end.gd" id="1_bp8bq"]
+[ext_resource type="PackedScene" uid="uid://beh7i7aihmllo" path="res://scn/background/background.tscn" id="2_gvfm1"]
+[ext_resource type="Script" path="res://scn/menu/background.gd" id="2_pv71v"]
+[ext_resource type="AudioStream" uid="uid://bcb7wtp8lent5" path="res://scn/end/bg.mp3" id="4_5eiry"]
+
+[sub_resource type="GDScript" id="GDScript_weai3"]
+script/source = "extends Label
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if(Global.day < 2):
+		text = \"练习不到一年\"
+	elif Global.day < 5:
+		text = \"练习不到两年\"
+	elif Global.day < 7:
+		text = \"练习两年半\"
+	elif Global.day < 10:
+		text = \"出道\"
+	elif Global.day < 15:
+		text = \"geigei\"
+"
+
+[sub_resource type="GDScript" id="GDScript_y856p"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	text = \"你活下去了:\" + str(Global.day) + \"天\"
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	text = \"你活下去了:\" + str(Global.day) + \"天\"
+"
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_bp8bq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1152, 40)
+offset_top = 58.0
+offset_right = 1152.0
+offset_bottom = 246.0
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "菜23123"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_weai3")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 473.0
+offset_top = 205.0
+offset_right = 678.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 30
+text = "你活下去了:0天"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_y856p")
+
+[node name="Restart" type="Button" parent="."]
+offset_left = 478.0
+offset_top = 288.0
+offset_right = 664.0
+offset_bottom = 319.0
+theme_override_font_sizes/font_size = 20
+text = "重新开始
+"
+
+[node name="Home" type="Button" parent="."]
+offset_left = 478.0
+offset_top = 339.0
+offset_right = 665.0
+offset_bottom = 376.0
+text = "回到主页
+"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 477.0
+offset_top = 389.0
+offset_right = 666.0
+offset_bottom = 425.0
+theme_override_font_sizes/font_size = 20
+text = "退出"
+
+[node name="Background" parent="." instance=ExtResource("2_gvfm1")]
+script = ExtResource("2_pv71v")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5eiry")
+volume_db = -7.153
+autoplay = true
+
+[connection signal="pressed" from="Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Home" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
